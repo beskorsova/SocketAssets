@@ -18,7 +18,6 @@ namespace SocketAssets
             {
                 if (result.IndexOf(startParsingWord) != -1)
                 {
-                    result = result.Substring(result.IndexOf(startParsingWord) + startParsingWord.Length).TrimEnd(' ');
                     recievedDataToParse = true;
                 }
                 return false;
@@ -42,7 +41,7 @@ namespace SocketAssets
 
             while (true)
             {
-                Thread.Sleep(1);
+                Thread.Sleep(5);
                 var numberOfBytes = socket.Receive(buffer);
                 var result = Encoding.ASCII.GetString(buffer, 0, numberOfBytes);
 
