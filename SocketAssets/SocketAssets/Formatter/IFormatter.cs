@@ -9,6 +9,6 @@ namespace SocketAssets.Formatter
 {
     interface IFormatter<T>
     {
-       List<T> FromString(string result);
+       IEnumerable<T> FromString(string result);
     }
 }
