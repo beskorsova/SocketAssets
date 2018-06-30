@@ -22,13 +22,13 @@ namespace SocketAssets
             s.Connect(host, port);
         }
 
-        public static void Read<T>(T grid) where T: IGrid, ISocketData
+        public static void Read(int dataSize, Action<string> callback)
         {
             string StartParsingWord = "Access granted:";
             bool recievedDataToParse = false;
 
 
-            byte[] buffer = new byte[grid.DataSize];
+            byte[] buffer = new byte[dataSize];
 
             while (true)
             {
@@ -46,9 +46,7 @@ namespace SocketAssets
                     continue;
                 }
 
-                grid.AddOrUpdateItems(result);
-                Console.Clear();
-                Console.WriteLine(grid);
+                callback(result);
 
                 Array.Clear(buffer, 0, buffer.Length);
             }

@@ -8,11 +8,20 @@ namespace SocketAssets
 {
     class Program
     {
+
+        static AssetGrid grid = new AssetGrid();
+
         static void Main(string[] args)
         {
-            AssetGrid grid = new AssetGrid();
             ConnectionService.Connect("79.125.80.209", 4092);
-            ConnectionService.Read(grid);
+            ConnectionService.Read(grid.DataSize, ShowGrid);
+        }
+
+        static void ShowGrid(string result)
+        {
+            grid.AddOrUpdateItems(result);
+            Console.Clear();
+            Console.WriteLine(grid);
         }
     }
 }
