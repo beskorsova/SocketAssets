@@ -31,7 +31,7 @@ namespace SocketAssets
             {
                 Thread.Sleep(1);
 
-                byte[] buffer = new byte[1024];
+                byte[] buffer = new byte[grid.DataSize];
                 var numberOfBytes = s.Receive(buffer);
                 var result = Encoding.ASCII.GetString(buffer, 0, numberOfBytes);
 

@@ -10,6 +10,7 @@ namespace SocketAssets
     class AssetGrid : List<Asset>
     {
         private AssetFormatter formatter = new AssetFormatter();
+        public int DataSize = 1024;
         public void AddOrUpdateItems(string item)
         {
             var assets = formatter.FromString(item);
