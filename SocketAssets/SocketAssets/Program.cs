@@ -10,6 +10,7 @@ namespace SocketAssets
     {
         static void Main(string[] args)
         {
+            ConnectionService.Connect("79.125.80.209", 4092);
         }
     }
 }
