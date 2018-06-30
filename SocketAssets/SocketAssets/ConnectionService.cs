@@ -27,11 +27,12 @@ namespace SocketAssets
             string StartParsingWord = "Access granted:";
             bool recievedDataToParse = false;
 
+
+            byte[] buffer = new byte[grid.DataSize];
+
             while (true)
             {
                 Thread.Sleep(1);
-
-                byte[] buffer = new byte[grid.DataSize];
                 var numberOfBytes = s.Receive(buffer);
                 var result = Encoding.ASCII.GetString(buffer, 0, numberOfBytes);
 
@@ -48,6 +49,8 @@ namespace SocketAssets
                 grid.AddOrUpdateItems(result);
                 Console.Clear();
                 Console.WriteLine(grid);
+
+                Array.Clear(buffer, 0, buffer.Length);
             }
         }
     }

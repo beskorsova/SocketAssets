@@ -14,21 +14,14 @@ namespace SocketAssets
         public double Bid { get; set; }
         public double Ask { get; set; }
 
-        private string dateFormat;
-
-        public Asset(string[] values, string dateFormat)
+        public string FormattedString ( string dateFormat = "")
         {
-            this.dateFormat = dateFormat;
-
-            Name = values[0];
-            Time = DateTime.ParseExact(values[1], dateFormat, CultureInfo.InvariantCulture);
-            Bid = double.Parse(values[2]);
-            Ask = double.Parse(values[3]);
+            return $"{Name} {Time.ToString(dateFormat)} {Bid} {Ask}";
         }
 
         public override string ToString()
         {
-            return $"{Name} {Time.ToString(dateFormat)} {Bid} {Ask}";
+            return FormattedString();
         }
     }
 }

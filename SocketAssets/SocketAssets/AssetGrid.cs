@@ -45,7 +45,7 @@ namespace SocketAssets
             result.Append("Name\t\tTime\t\tBid\tAsk\n");
             foreach (var asset in this)
             {
-                result.Append(asset + "\n");
+                result.Append(asset.FormattedString(formatter.DateFormat) + "\n");
             }
             return result.ToString();
         }
