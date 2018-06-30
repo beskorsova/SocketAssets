@@ -37,7 +37,7 @@ namespace SocketAssets
         public override string ToString()
         {
             var result = new StringBuilder();
-            result.Append("Name\tTime\tBid\tAsk");
+            result.Append("Name\t\tTime\t\tBid\tAsk\n");
             foreach(var asset in this)
             {
                 result.Append(asset + "\n");
