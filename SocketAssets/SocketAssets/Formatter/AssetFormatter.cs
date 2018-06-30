@@ -7,12 +7,14 @@ namespace SocketAssets.Formatter
     {
         private readonly string dateFormat = "dd/MM/yyyy-HH:mm:ss.fff";
 
+        private readonly string[] lineSeparators = new string[] { "\r\n" };
+
+        private readonly char valueSplitter = ' ';
+
         public List<Asset> FromString(string result)
         {
             List<Asset> asserts = new List<Asset>();
             
-            string[] lineSeparators = new string[] { "\r\n" };
-            char valueSplitter = ' ';
             string[] lines = result.Split(lineSeparators, StringSplitOptions.RemoveEmptyEntries);
             foreach (var line in lines)
             {

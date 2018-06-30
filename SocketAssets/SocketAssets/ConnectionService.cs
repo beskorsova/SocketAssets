@@ -22,7 +22,7 @@ namespace SocketAssets
             s.Connect(host, port);
         }
 
-        public static void Read<T>(T grid) where T: AssetGrid
+        public static void Read<T>(T grid) where T: IGrid, ISocketData
         {
             string StartParsingWord = "Access granted:";
             bool recievedDataToParse = false;

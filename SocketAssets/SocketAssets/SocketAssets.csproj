@@ -47,8 +47,10 @@
     <Compile Include="ConnectionService.cs" />
     <Compile Include="Formatter\AssetFormatter.cs" />
     <Compile Include="Formatter\IFormatter.cs" />
+    <Compile Include="IGrid.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ISocketData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
