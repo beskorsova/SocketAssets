@@ -42,7 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Asset.cs" />
     <Compile Include="ConnectionService.cs" />
+    <Compile Include="Formatter\AssetFormatter.cs" />
+    <Compile Include="Formatter\IFormatter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

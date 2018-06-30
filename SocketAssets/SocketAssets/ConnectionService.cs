@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SocketAssets.Formatter;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -13,11 +14,12 @@ namespace SocketAssets
     {
         public static void Connect(string host, int port)
         {
-           // IPAddress[] IPs = Dns.GetHostAddresses(host);
+            string StartParsingWord = "Access granted:";
+            bool recievedDataToParse = false;
 
             Socket s = new Socket(AddressFamily.InterNetwork,
-                SocketType.Stream,
-                ProtocolType.Tcp);
+                    SocketType.Stream,
+                    ProtocolType.Tcp);
 
             Console.WriteLine("Establishing Connection to {0}",
                 host);
@@ -27,10 +29,25 @@ namespace SocketAssets
             while (true)
             {
                 Thread.Sleep(1);
-               
-                byte[] buffer = new byte[256];
+
+                byte[] buffer = new byte[1024];
                 var numberOfBytes = s.Receive(buffer);
-                Console.WriteLine(Encoding.ASCII.GetString(buffer, 0, numberOfBytes));
+                var result = Encoding.ASCII.GetString(buffer, 0, numberOfBytes);
+
+                if (!recievedDataToParse)
+                {
+                    if (result.IndexOf(StartParsingWord) != -1)
+                    {
+                        result = result.Substring(result.IndexOf(StartParsingWord) + StartParsingWord.Length).TrimEnd(' ');
+                        recievedDataToParse = true;
+                    }
+                    continue;
+                }
+
+                foreach (var assest in new AssetFormatter().FromString(result))
+                {
+                    Console.WriteLine(assest);
+                }
             }
         }
     }
