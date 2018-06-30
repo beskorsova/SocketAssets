@@ -1,50 +1,52 @@
-﻿using SocketAssets.Formatter;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SocketAssets
 {
     class ConnectionService
     {
-        private static Socket s;
-        public static void Connect(string host, int port)
+        private Socket socket;
+        private string startParsingWord = "Access granted:";
+        private bool recievedDataToParse = false;
+
+        //TODO: refactor: this is a work around for not parsing login password access granted values
+        private bool checkForData(string result)
         {
-            s = new Socket(AddressFamily.InterNetwork,
+            if (!recievedDataToParse)
+            {
+                if (result.IndexOf(startParsingWord) != -1)
+                {
+                    result = result.Substring(result.IndexOf(startParsingWord) + startParsingWord.Length).TrimEnd(' ');
+                    recievedDataToParse = true;
+                }
+                return false;
+            }
+
+            return true;
+        }
+
+        public void Connect(string host, int port)
+        {
+            socket = new Socket(AddressFamily.InterNetwork,
                     SocketType.Stream,
                     ProtocolType.Tcp);
 
-            s.Connect(host, port);
+            socket.Connect(host, port);
         }
 
-        public static void Read(int dataSize, Action<string> callback)
+        public void Read(int dataSize, Action<string> callback)
         {
-            string StartParsingWord = "Access granted:";
-            bool recievedDataToParse = false;
-
-
             byte[] buffer = new byte[dataSize];
 
             while (true)
             {
                 Thread.Sleep(1);
-                var numberOfBytes = s.Receive(buffer);
+                var numberOfBytes = socket.Receive(buffer);
                 var result = Encoding.ASCII.GetString(buffer, 0, numberOfBytes);
 
-                if (!recievedDataToParse)
-                {
-                    if (result.IndexOf(StartParsingWord) != -1)
-                    {
-                        result = result.Substring(result.IndexOf(StartParsingWord) + StartParsingWord.Length).TrimEnd(' ');
-                        recievedDataToParse = true;
-                    }
-                    continue;
-                }
+                if (!checkForData(result)) continue;
 
                 callback(result);
 
