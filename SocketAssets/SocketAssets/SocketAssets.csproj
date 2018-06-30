@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Asset.cs" />
+    <Compile Include="AssetGrid.cs" />
     <Compile Include="ConnectionService.cs" />
     <Compile Include="Formatter\AssetFormatter.cs" />
     <Compile Include="Formatter\IFormatter.cs" />

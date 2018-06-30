@@ -12,19 +12,20 @@ namespace SocketAssets
 {
     class ConnectionService
     {
+        private static Socket s;
         public static void Connect(string host, int port)
         {
-            string StartParsingWord = "Access granted:";
-            bool recievedDataToParse = false;
-
-            Socket s = new Socket(AddressFamily.InterNetwork,
+            s = new Socket(AddressFamily.InterNetwork,
                     SocketType.Stream,
                     ProtocolType.Tcp);
 
-            Console.WriteLine("Establishing Connection to {0}",
-                host);
             s.Connect(host, port);
-            Console.WriteLine("Connection established");
+        }
+
+        public static void Read<T>(T grid) where T: AssetGrid
+        {
+            string StartParsingWord = "Access granted:";
+            bool recievedDataToParse = false;
 
             while (true)
             {
@@ -44,10 +45,9 @@ namespace SocketAssets
                     continue;
                 }
 
-                foreach (var assest in new AssetFormatter().FromString(result))
-                {
-                    Console.WriteLine(assest);
-                }
+                grid.AddOrUpdateItems(result);
+                Console.Clear();
+                Console.WriteLine(grid);
             }
         }
     }
